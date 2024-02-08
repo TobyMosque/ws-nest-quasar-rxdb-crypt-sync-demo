@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "workspaces": [
+    "api",
+    "api-sdk",
+    "app"
+  ],
+  "scripts": {
+    "api": "yarn workspace api",
+    "app": "yarn workspace app",
+    "sdk": "yarn workspace api-sdk",
+    "generate": "openapi-generator-cli generate -i ./openapi.json -g typescript-fetch -o ./api-sdk --skip-validate-spec --additional-properties=npmName=api-sdk,npmVersion=\"1.0.0\",supportsES6=true",
+    "database": "yarn api prisma migrate dev && yarn api prisma generate && yarn api prisma db seed",
+    "postinstall": "yarn database && yarn api build && yarn generate && yarn sdk prepare",
+    "dev": "yarn api start:debug & yarn app dev"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.7.0"
+  }
+}
