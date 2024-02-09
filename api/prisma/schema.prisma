@@ -17,6 +17,6 @@ model Person {
   gender    String
   email     String
 
-  deleted Boolean    @default(false)
+  isDeleted Boolean    @default(false)
   updatedAt DateTime @default(now())
 }

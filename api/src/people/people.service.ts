@@ -16,7 +16,7 @@ export class PeopleService {
     if (dto.minUpdatedAt) {
       params.where = {
         updatedAt: {
-          gte: dto.minUpdatedAt
+          gt: dto.minUpdatedAt
         }
       }
     }

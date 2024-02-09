@@ -6,6 +6,6 @@ export class Person implements PersonEntity {
   lastName: string
   gender: string
   email: string
-  deleted: boolean
+  isDeleted: boolean
   updatedAt: Date
 }

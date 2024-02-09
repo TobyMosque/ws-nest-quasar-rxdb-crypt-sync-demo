@@ -5,6 +5,6 @@ CREATE TABLE "Person" (
     "lastName" TEXT NOT NULL,
     "gender" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "deleted" BOOLEAN NOT NULL DEFAULT false,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
     "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

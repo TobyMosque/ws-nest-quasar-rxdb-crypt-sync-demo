@@ -33,7 +33,7 @@ async function main() {
     const gender = faker.person.sexType();
     const firstName = faker.person.firstName(gender);
     const lastName = faker.person.lastName(gender);
-    const email = faker.internet.email({ firstName, lastName });
+    const email = faker.internet.email({ firstName, lastName }).toLowerCase().replace(/ /, a => '.').replace(/\W/, a => '_');
     const updatedAt = new Date()
 
     people.push({
@@ -41,9 +41,9 @@ async function main() {
       firstName,
       lastName,
       gender,
+      email,
       updatedAt: new Date(),
-      deleted: false,
-      email 
+      isDeleted: false
     })
   }
 

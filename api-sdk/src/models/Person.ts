@@ -54,7 +54,7 @@ export interface Person {
      * @type {boolean}
      * @memberof Person
      */
-    deleted: boolean;
+    isDeleted: boolean;
     /**
      * 
      * @type {Date}
@@ -73,7 +73,7 @@ export function instanceOfPerson(value: object): boolean {
     isInstance = isInstance && "lastName" in value;
     isInstance = isInstance && "gender" in value;
     isInstance = isInstance && "email" in value;
-    isInstance = isInstance && "deleted" in value;
+    isInstance = isInstance && "isDeleted" in value;
     isInstance = isInstance && "updatedAt" in value;
 
     return isInstance;
@@ -94,7 +94,7 @@ export function PersonFromJSONTyped(json: any, ignoreDiscriminator: boolean): Pe
         'lastName': json['lastName'],
         'gender': json['gender'],
         'email': json['email'],
-        'deleted': json['deleted'],
+        'isDeleted': json['isDeleted'],
         'updatedAt': (new Date(json['updatedAt'])),
     };
 }
@@ -113,7 +113,7 @@ export function PersonToJSON(value?: Person | null): any {
         'lastName': value.lastName,
         'gender': value.gender,
         'email': value.email,
-        'deleted': value.deleted,
+        'isDeleted': value.isDeleted,
         'updatedAt': (value.updatedAt.toISOString()),
     };
 }

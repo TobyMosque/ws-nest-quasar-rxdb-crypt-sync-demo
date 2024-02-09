@@ -1,0 +1,169 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/people": {
+      "get": {
+        "operationId": "PeopleController_findAll",
+        "parameters": [
+          {
+            "name": "minUpdatedAt",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Person"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "people"
+        ]
+      },
+      "post": {
+        "operationId": "PeopleController_bulkUpsert",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BulkUpsertPersonDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "people"
+        ]
+      }
+    },
+    "/people/{id}": {
+      "put": {
+        "operationId": "PeopleController_upsert",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "people"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "People example",
+    "description": "The people API description",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "people",
+      "description": ""
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "Person": {
+        "type": "object",
+        "properties": {
+          "personId": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "personId",
+          "firstName",
+          "lastName",
+          "gender",
+          "email",
+          "isDeleted",
+          "updatedAt"
+        ]
+      },
+      "BulkUpsertPersonDto": {
+        "type": "object",
+        "properties": {
+          "people": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Person"
+            }
+          }
+        },
+        "required": [
+          "people"
+        ]
+      }
+    }
+  }
+}

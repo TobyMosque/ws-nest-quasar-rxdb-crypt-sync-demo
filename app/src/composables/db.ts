@@ -47,7 +47,7 @@ export async function createDb(pinia: Pinia) {
   const peopleDb: PeopleDb = await createRxDatabase({
     name: `/people_` + sessionId,
     storage: storage,
-    password: `i_am_not_a_secret`,
+    password: 'i_am_not_a_secret',
   });
 
   await peopleDb.addCollections({
@@ -74,7 +74,7 @@ export async function startReplication(pinia: Pinia) {
     collection: peopleDb.collections.people,
     replicationIdentifier: 'api/people',
     live: true,
-    deletedField: 'deleted',
+    deletedField: 'isDeleted',
     pull: {
       async handler(
         lastCheckpoint: PersonCheckPoint | undefined,
@@ -83,13 +83,12 @@ export async function startReplication(pinia: Pinia) {
         const request: PeopleControllerFindAllRequest = {
           limit: batchSize,
         };
-        if (lastCheckpoint) {
+        if (lastCheckpoint?.upsertedAt) {
           request.minUpdatedAt = new Date(lastCheckpoint.upsertedAt);
         }
 
         const people = await peopleApi.peopleControllerFindAll(request);
         const documents: RxPerson[] = people?.map(PersonToJSON) || [];
-
         const res: ReplicationPullHandlerResult<RxPerson, PersonCheckPoint> = {
           documents: [],
           checkpoint: lastCheckpoint ?? null,
@@ -109,7 +108,9 @@ export async function startReplication(pinia: Pinia) {
     },
     push: {
       async handler(docs) {
-        const entities = docs.map((d) => PersonFromJSON(d.newDocumentState));
+        const entities = docs.map((d) => {
+          return PersonFromJSON(d.newDocumentState);
+        });
 
         const request: PeopleControllerBulkUpsertRequest = {
           bulkUpsertPersonDto: {

@@ -3,13 +3,10 @@ import type { RxPerson } from 'src/types/database/person';
 
 export const PersonSchema = {
   required: [
-    'personId',
     'firstName',
     'lastName',
     'gender',
     'email',
-    '_deleted',
-    'updatedAt',
   ],
   type: 'object',
   version: 0,
@@ -22,6 +19,7 @@ export const PersonSchema = {
     },
     firstName: {
       type: 'string',
+      maxLength: 18,
     },
     lastName: {
       type: 'string',
@@ -32,14 +30,14 @@ export const PersonSchema = {
     email: {
       type: 'string',
     },
-    _deleted: {
+    isDeleted: {
       type: 'boolean',
     },
     updatedAt: {
-      format: 'date-time',
       type: 'string',
     },
   },
+  encrypted: ['lastName', 'email'],
 } as const;
 
 export const RxPersonSchema: RxJsonSchema<RxPerson> = PersonSchema as never;
